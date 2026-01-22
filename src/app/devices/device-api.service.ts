@@ -15,23 +15,22 @@ export interface Message {
   version: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class DeviceApiService {
   private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:8080';
 
   getDevices() {
-    return this.http.get<{ devices: string[] }>(`${this.baseUrl}/api/message/all_devices`).pipe(
-      map(response => response.devices.map(id => ({ deviceName: id }))),
+    return this.http.get<{ devices: string[] }>(`/api/message/all_devices`).pipe(
+      map(r => r.devices.map(id => ({ deviceName: id }))),
       catchError(() => of([]))
     );
   }
 
   getDeviceMessages(deviceName: string) {
-    return this.http.get<Message[]>(`${this.baseUrl}/api/message/messages_by_device?deviceName=${deviceName}`).pipe(
+    const q = encodeURIComponent(deviceName);
+    return this.http.get<Message[]>(`/api/message/messages_by_device?deviceName=${q}`).pipe(
       catchError(() => of([]))
     );
   }
 }
+
