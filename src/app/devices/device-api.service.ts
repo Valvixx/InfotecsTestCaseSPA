@@ -20,11 +20,11 @@ export interface Message {
 })
 export class DeviceApiService {
   private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:5096';  // твой порт
+  private baseUrl = 'http://localhost:8080';
 
   getDevices() {
     return this.http.get<{ devices: string[] }>(`${this.baseUrl}/api/message/all_devices`).pipe(
-      map(response => response.devices.map(id => ({ deviceName: id }))),  // ← ТОЧНО ТВОЙ ФОРМАТ
+      map(response => response.devices.map(id => ({ deviceName: id }))),
       catchError(() => of([]))
     );
   }
