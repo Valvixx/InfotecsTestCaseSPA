@@ -17,7 +17,6 @@ export class DeviceDetailsPageComponent {
   private deviceService = inject(DeviceApiService);
   private route = inject(ActivatedRoute);
 
-  // ID from URL (/devices/{id})
   deviceId = toSignal(
     this.route.paramMap.pipe(
       map(params => params.get('id') ?? '')
@@ -31,7 +30,6 @@ export class DeviceDetailsPageComponent {
   hasError = signal(false);
 
   constructor() {
-    // Auto-load when deviceId changes
     effect(() => {
       const id = this.deviceId();
       console.log('📱 Device ID:', id);
